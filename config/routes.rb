@@ -1,4 +1,6 @@
+
 Rails.application.routes.draw do
+  get "/", to: "pages#home", as: "root"
 
   get "/listings", to: "listings#index", as: "listings"
   post "/listings", to: "listings#create"
@@ -8,7 +10,6 @@ Rails.application.routes.draw do
   patch "/listings/:id", to: "listings#update"
   delete "/listings/:id", to: "listings#destroy"
   get "/listings/:id/edit", to: "listings#edit", as: "edit_listing"
-
   get "*path", to: "pages#not_found"
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
 end

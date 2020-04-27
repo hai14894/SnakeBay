@@ -1,2 +1,7 @@
-<h1>Listings</h1>
-<form action="<%= listings_path %>" method = "POST">
+# <%  for listing in @listings %>
+#     <li>
+#         <%= link_to listing.title, listing_path(listing.id)%>
+#         <%= image_tag listing.picture if listing.picture.attached? %>
+#     </li>
+# <% end %>
+awdawd
