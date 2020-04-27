@@ -11,12 +11,20 @@ class ListingsController < ApplicationController
     end
 
     def new
-        @listing = Listing.new
+
+            set_breeds_and_sexes
+            @listing = Listing.new
     end
 
     def create
         #finish logic for creating a record
-        Listing.create(listing_params)
+        @listing = Listing.create(listing_params)
+        if @listing.errors.any?
+            set_breeds_and_sexes
+            render "new"
+        else 
+            redirect_to listings_path
+        end
     end
 
     def edit
@@ -32,13 +40,19 @@ class ListingsController < ApplicationController
     end
 
     private
+   
+
+    def set_breeds_and_sexes
+        @breeds = Breed.all
+        @sexes = Listing.sexes.keys
+    end
 
     def set_listing
         @listing = Listing.find(params[:id])
     end
 
     def listing_params
-        params.require(:listing).permit(:title, :description, :breed_id, :sex, :price, :deposit, :date_of_birth, :diet, :picture)
+        params.require(:listing).permit(:title, :description, :breed_id, :city, :state, :sex, :price, :deposit, :date_of_birth, :diet, :picture)
     end
 
 end
