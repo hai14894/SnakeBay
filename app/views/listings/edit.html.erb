@@ -1,8 +1,3 @@
 <h1>Edit Listing</h1>
 
-<% if @listing.errors.any? %>
-    <% @listing.errors.full_messages.each do |message| %>
-        <li style="color: red"><%= message %></li>
-    <% end %>
-<% end %>
-<%= render :partial => 'form' %>
+<%= render "form", listing: @listing, breeds: @breeds, sexes: @sexes %>

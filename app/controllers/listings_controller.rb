@@ -1,19 +1,16 @@
 class ListingsController < ApplicationController
     before_action :set_listing, only: [:show, :edit, :update, :destroy]
 
-
     def index
         @listings = Listing.all
     end
 
     def show
-
     end
 
     def new
-
-            set_breeds_and_sexes
-            @listing = Listing.new
+        set_breeds_and_sexes
+        @listing = Listing.new
     end
 
     def create
@@ -28,31 +25,38 @@ class ListingsController < ApplicationController
     end
 
     def edit
+        set_breeds_and_sexes
     end
 
     def update
-        #finsih logic for updating the record
+        @listing = Listing.update(params["id"], listing_params)
+        puts @listing
+        if @listing.errors.any?
+            set_breeds_and_sexes
+            render "edit"
+        else 
+            redirect_to listings_path
+        end
     end
 
     def destroy
-        
-        #finish logic for deleting the record
+        Listing.find(params[:id]).destroy
+        redirect_to listings_path
     end
 
     private
-   
+
+    def set_listing
+        @listing = Listing.find(params[:id])
+    end
 
     def set_breeds_and_sexes
         @breeds = Breed.all
         @sexes = Listing.sexes.keys
     end
 
-    def set_listing
-        @listing = Listing.find(params[:id])
-    end
-
     def listing_params
-        params.require(:listing).permit(:title, :description, :breed_id, :city, :state, :sex, :price, :deposit, :date_of_birth, :diet, :picture)
+        params.require(:listing).permit(:title, :description, :breed_id, :sex, :city, :state, :price, :deposit, :date_of_birth, :diet, :picture)
     end
 
 end
