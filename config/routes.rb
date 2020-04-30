@@ -2,6 +2,7 @@
 Rails.application.routes.draw do
   devise_for :users
   get "/", to: "pages#home", as: "root"
+  get "/payments/success", to: "payments#success"
 
   get "/listings", to: "listings#index", as: "listings"
   post "/listings", to: "listings#create"
